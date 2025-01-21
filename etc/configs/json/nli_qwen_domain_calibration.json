@@ -1,0 +1,62 @@
+{
+    "dataset": {
+        "path": "unigram/FOL-nli",
+        "shots": 8,
+        "max_n_test": 10,
+        "task_type": "classification"
+    },
+    "model": {
+        "name": "Qwen/Qwen2-0.5B-Instruct",
+        "quantization": {
+            "config_class": "BitsAndBytesConfig",
+            "args": {
+                "load_in_8bit": true
+            }
+        }
+    },
+    "lora": {
+        "r": 8,
+        "lora_alpha": 8,
+        "init_lora_weights": true,
+        "target_modules": [
+            "q_proj"
+        ],
+        "bias": "none",
+        "lora_dropout": 0.15
+    },
+    "prompting": {
+        "instruction": "Determine whether the `hypothesis` entails, contradicts, or is neutral given the `premise`",
+        "input_columns": [
+            "premise",
+            "hypothesis"
+        ],
+        "output_column": "label",
+        "max_input_length": 256,
+        "max_output_length": 5
+    },
+    "training": {
+        "icl_examples": 0,
+        "trainer_args": {
+            "num_train_epochs": 5,
+            "learning_rate": 1e-4,
+            "per_device_train_batch_size": 1,
+            "gradient_accumulation_steps": 8,
+            "max_seq_length": 512,
+            "output_dir": "./checkpoints/rte_qwen",
+            "save_strategy": "epoch",
+            "save_total_limit": 1,
+            "logging_steps": 10
+        }
+    },
+    "inference": {
+        "batch_size": 4,
+        "max_seq_length": 512,
+        "icl_examples": 2,
+        "random_icl": true,
+        "calibration_args": {
+            "calibration_fn": "domain",
+            "num_estimations": 5,
+            "language": "en"
+        }
+    }
+}

@@ -1,0 +1,59 @@
+{
+    "dataset": {
+        "path": "mteb/tweet_sentiment_extraction",
+        "shots": 8,
+        "max_n_test": 50,
+        "task_type": "classification"
+    },
+    "model": {
+        "name": "Qwen/Qwen2-0.5B-Instruct",
+        "quantization": {
+            "config_class": "BitsAndBytesConfig",
+            "args": {
+                "load_in_8bit": true
+            }
+        }
+    },
+    "lora": {
+        "r": 8,
+        "lora_alpha": 8,
+        "init_lora_weights": "pca",
+        "target_modules": [
+            "q_proj"
+        ],
+        "bias": "none",
+        "lora_dropout": 0.15
+    },
+    "prompting": {
+        "instruction": "Classify the sentiment of a review in 'negative', 'neutral', or 'positive'",
+        "input_columns": [
+            "text"
+        ],
+        "output_column": "label_text",
+        "max_input_length": 50,
+        "max_output_length": 5
+    },
+    "training": {
+        "icl_examples": 1,
+        "trainer_args": {
+            "num_train_epochs": 5,
+            "learning_rate": 1e-4,
+            "per_device_train_batch_size": 1,
+            "gradient_accumulation_steps": 8,
+            "max_seq_length": 256,
+            "output_dir": "./checkpoints/tweet_sentiment_qwen",
+            "save_strategy": "epoch",
+            "save_total_limit": 1,
+            "logging_steps": 10
+        }
+    },
+    "inference": {
+        "batch_size": 16,
+        "max_seq_length": 256,
+        "icl_examples": 2,
+        "calibration_args": {
+            "calibration_fn": "contextual",
+            "num_estimations": 5
+        }
+    }
+}

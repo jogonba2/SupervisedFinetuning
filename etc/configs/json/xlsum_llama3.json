@@ -1,0 +1,35 @@
+{
+    "dataset": {
+        "path": "csebuetnlp/xlsum",
+        "shots": 0,
+        "max_n_test": 10,
+        "args": {
+            "name": "arabic"
+        },
+        "task_type": "generation"
+    },
+    "model": {
+        "name": "casperhansen/llama-3-70b-instruct-awq",
+        "chat_template_from": "meta-llama/Meta-Llama-3-70B-Instruct"
+    },        
+    "prompting": {
+        "instruction": "Create a summary of the following text in arabic.",
+        "input_columns": [            
+            "text"
+        ],
+        "output_column": "summary",
+        "max_input_length": 2048,
+        "max_output_length": 128
+    },    
+    "inference": {
+        "batch_size": 2,
+        "max_seq_length": 2048, "icl_examples": 0,
+        "generation_args": {
+            "do_sample": false,
+            "max_new_tokens": 128
+        }        
+    },
+    "evaluation": {
+        "tokenizer_name": "aubmindlab/bert-base-arabert"
+    }
+}

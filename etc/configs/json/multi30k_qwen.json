@@ -1,0 +1,59 @@
+{
+    "dataset": {
+        "path": "bentrevett/multi30k",
+        "shots": 8,
+        "max_n_test": 50,
+        "task_type": "generation"
+    },
+    "model": {
+        "name": "Qwen/Qwen2-0.5B-Instruct",
+        "quantization": {
+            "config_class": "BitsAndBytesConfig",
+            "args": {
+                "load_in_8bit": true
+            }
+        }
+    },
+    "lora": {
+        "r": 8,
+        "lora_alpha": 8,
+        "init_lora_weights": "pca",
+        "target_modules": [
+            "q_proj"
+        ],
+        "bias": "none",
+        "lora_dropout": 0.15
+    },
+    "prompting": {
+        "instruction": "Translate the following text from English to German.",
+        "input_columns": [
+            "en"
+        ],
+        "output_column": "de",
+        "max_input_length": 50,
+        "max_output_length": 50
+    },
+    "training": {
+        "icl_examples": 3,
+        "trainer_args": {
+            "num_train_epochs": 5,
+            "learning_rate": 1e-4,
+            "per_device_train_batch_size": 1,
+            "gradient_accumulation_steps": 16,
+            "max_seq_length": 512,
+            "output_dir": "./checkpoints/multi30k_qwen",
+            "save_strategy": "epoch",
+            "save_total_limit": 1,
+            "logging_steps": 10
+        }
+    },
+    "inference": {
+        "batch_size": 32,
+        "max_seq_length": 512,
+        "icl_examples": 3,
+        "generation_args": {
+            "do_sample": false,
+            "max_new_tokens": 50
+        }
+    }
+}

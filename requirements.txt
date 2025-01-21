@@ -1,0 +1,28 @@
+transformers
+evaluate
+datasets
+trl
+peft
+psutil
+rouge_score
+typer
+accelerate
+autoawq
+autoawq-kernels
+spacy
+numpy<2.0.0
+bert_score
+adlfs>=2023.4.0
+jsonnet
+umap-learn
+bitsandbytes
+optimum
+auto-gptq
+torchmetrics
+lm-eval @ git+https://github.com/EleutherAI/lm-evaluation-harness.git
+bleurt @ git+https://github.com/google-research/bleurt.git
+tf-keras
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.2.2
+gradio>=4.13.0
+sentencepiece

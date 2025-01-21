@@ -1,0 +1,26 @@
+{
+    "dataset": {
+        "path": "local_datasets/qqp_llama",
+        "max_n_test": 100,      
+        "task_type": "classification"        
+    },
+    "model": {
+        "name": "casperhansen/llama-3-70b-instruct-awq",
+        "chat_template_from": "meta-llama/Meta-Llama-3-70B-Instruct"
+    },
+    "prompting": {
+        "instruction": "Determine whether `question1` and `question2` are semantically equal, labels are `not_duplicate` for not equal and `duplicate` for equal.",
+        "input_columns": [
+            "question1",
+            "question2"
+        ],
+        "output_column": "references",
+        "max_input_length": 256,
+        "max_output_length": 5
+    },    
+    "inference": {
+        "batch_size": 16,
+        "max_seq_length": 512,
+        "icl_examples": 2
+    }
+}

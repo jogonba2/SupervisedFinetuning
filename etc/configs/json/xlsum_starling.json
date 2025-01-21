@@ -1,0 +1,34 @@
+{
+    "dataset": {
+        "path": "csebuetnlp/xlsum",
+        "shots": 0,
+        "max_n_test": 1000,
+        "args": {
+            "name": "arabic"
+        },
+        "task_type": "generation"
+    },
+    "model": {
+        "name": "berkeley-nest/Starling-LM-7B-alpha"        
+    },    
+    "prompting": {
+        "instruction": "Create a summary of the following text in arabic.",
+        "input_columns": [            
+            "text"
+        ],
+        "output_column": "summary",
+        "max_input_length": 2048,
+        "max_output_length": 128
+    },    
+    "inference": {
+        "batch_size": 16,
+        "max_seq_length": 2048, "icl_examples": 3,
+        "generation_args": {
+            "do_sample": false,
+            "max_new_tokens": 128
+        }
+    },
+    "evaluation": {
+        "tokenizer_name": "aubmindlab/bert-base-arabert"
+    }
+}
