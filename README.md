@@ -43,7 +43,8 @@ Actually, 👉**SupervisedFinetuning** supports:
 - Multiple input columns.
 - Bitsandbytes and AWQ quantized models.
 - Custom LoRA initializations and flexibility to extend them.
-- Evaluation using Symanto's metrics and results aggregation.
+- Calibration methods like contextual, domain, and batch calibration.
+- Evaluation and results aggregation.
 - Single/Multiple experiments using JSON and JSONNET.
 
 # 🔧 Installation
